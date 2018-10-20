@@ -199,17 +199,30 @@ for i = 1:10
     if i <= 8
         perims(end+1) = (2*203) + (2*(41+(2*l(i)*.1889)));
     else
-        perims(end+1) = (2*203) + (2*(41+(2*l(i)*.53
+        perims(end+1) = (2*203) + (2*(41+(2*l(i)*.535)));
+    end
 end
+perims = perims*10^-3;
     
 ave_vels = (areas(1)./areas).*ave_vel1;
 ave_vels(5) = ave_vel5;
 ave_vels(8) = ave_vel8;
 ave_vels(10) = ave_vel10;
 
-hd = 
-re = 1.204.*ave_vels
+hd = (4.*areas)./perims;
+re = (1.204.*ave_vels.*hd)./(18.13*10^-6);
+disp(re)
 
+flow = areas.*ave_vels;
+disp(flow)
+
+stag = static + (.5 * 1.204 .* ave_vels.^2);
+disp(stag)
+
+for i = 1:10
+    fprintf('At port %d:\nV_ave = % .3f
+    
+end
 
 function out = in_m(in)
 out = in.*.0254;

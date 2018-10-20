@@ -189,7 +189,7 @@ for i =4:8
 end
 ave_vel10 = sum(sum_vels)/(2*5);
 
-disp([ave_vel1,ave_vel5,ave_vel8,ave_vel10])
+%disp([ave_vel1,ave_vel5,ave_vel8,ave_vel10])
 
 function table_calcs(static,ave_vel8,ave_vel1,ave_vel5,ave_vel10)
 areas = [33555,29643,25655,21897,17986,14151,10240,8323,13753,24830] .* 10^-6;
@@ -202,6 +202,7 @@ for i = 1:10
         perims(end+1) = (2*203) + (2*(41+(2*l(i)*.535)));
     end
 end
+perims = perims*10^-3;
     
 ave_vels = (areas(1)./areas).*ave_vel1;
 ave_vels(5) = ave_vel5;
@@ -210,8 +211,18 @@ ave_vels(10) = ave_vel10;
 
 hd = (4.*areas)./perims;
 re = (1.204.*ave_vels.*hd)./(18.13*10^-6);
-disp(re)
+%disp(re)
 
+flow = areas.*ave_vels;
+%disp(flow)
+
+stag = static + (.5 * 1.204 .* ave_vels.^2);
+%disp(stag)
+
+for i = 1:10
+    fprintf('At port %d:\nV_ave = % .3f\nRe = %.3f\nP_s = %.3f\nQ = %.3f\nP_t = %.3f\n\n',i,ave_vels(i),re(i),...
+        static(i),flow(i),stag(i));
+end
 
 function out = in_m(in)
 out = in.*.0254;
