@@ -34,7 +34,7 @@ plot(press,linfit,'r')
 legend('Voltage','Calibration Fit','Location','Northwest')
 xlabel('Differential Pressure (Pa)')
 ylabel('Voltage (V)')
-p_title = sprintf('Calibration Fit: V = %.4f\\DeltaP + %.3f',m,b);
+p_title = sprintf('Calibration Fit: V = %.4fP + %.3f',m,b);
 title(p_title)
 
 function static = static_pressures(m,b)
@@ -154,6 +154,8 @@ end
 
 figure('Visible','on','Name','Cross Section Velocities')
 plot(vel8,port8_pose,'+r',vel1,port1_pose,'og',vel5,port5_pose,'*b',vel10,port10_pose,'xk')
+xlim([0,20])
+ylim([0,170])
 legend('Point 8','Point 1','Point 5','Point 10')
 xlabel('Velocity (m/s)')
 ylabel('Vertical Position (mm)')
@@ -164,6 +166,7 @@ h8 = .005;
 h1 = .010;
 h5 = .010;
 h10 = .010;
+disp(vel10)
 
 sum_vels = [];
 for i =1:length(vel8)-1
