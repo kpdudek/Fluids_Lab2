@@ -2,8 +2,8 @@ function Fluids_Lab2
 %%%     BEGINNING OF ANALYSIS     %%%
 [m,b] = calibration_fit();
 static = static_pressures(m,b);
-[stag8,stag1,stag5,stag10] = stagnation_pressure(m,b);
-[vel8,vel1,vel5,vel10] = Cross_Section_Velocities(1.204,stag8,stag1,stag5,stag10,static);
+[dynam8,dynam1,dynam5,dynam10] = dynamic_pressure(m,b);
+[vel8,vel1,vel5,vel10] = Cross_Section_Velocities(1.204,dynam8,dynam1,dynam5,dynam10,static);
 [ave_vel8,ave_vel1,ave_vel5,ave_vel10] = average_velocites(vel8,vel1,vel5,vel10);
 table_calcs(static,ave_vel8,ave_vel1,ave_vel5,ave_vel10)
 
@@ -46,7 +46,7 @@ for i = 1:length(volts_along_tunnel)
     static(i) = (volts_along_tunnel(i)-b)/m;
 end
 
-function [stag8,stag1,stag5,stag10] = stagnation_pressure(m,b)
+function [dynam8,dynam1,dynam5,dynam10] = dynamic_pressure(m,b)
 port8_volt = [1.452,1.451,1.451,1.452,1.453,1.454,1.460]; %Units in Volts
 port1_volt = [1.252,1.253,1.252,1.256,1.253,1.254,1.253,1.254,1.254,1.254,1.255,1.253,1.255,1.253,1.254,1.253];
 port5_volt = [1.279,1.279,1.279,1.280,1.280,1.280,1.280,1.281];
@@ -54,49 +54,49 @@ port10_volt = [1.232,1.233,1.234,1.310,1.467,1.470,1.471,1.405,1.254,1.227,1.227
 v0 = 1.241;
 
 vel8 = zeros(1,length(port8_volt));
-stag8 = zeros(1,length(port8_volt));
+dynam8 = zeros(1,length(port8_volt));
 for i = 1:length(port8_volt)
     if port8_volt(i) > v0
-        stag8(i) = (port8_volt(i)-b)/m;
+        dynam8(i) = (port8_volt(i)-b)/m;
     else
-        stag8(i) = NaN;
+        dynam8(i) = NaN;
     end
 end
 
 %%% Port1
 vel1 = zeros(1,length(port1_volt));
-stag1 = zeros(1,length(port1_volt));
+dynam1 = zeros(1,length(port1_volt));
 for i = 1:length(port1_volt)
     if port1_volt(i) > v0
-        stag1(i) = (port1_volt(i)-b)/m;
+        dynam1(i) = (port1_volt(i)-b)/m;
     else
-        stag1(i) = NaN;
+        dynam1(i) = NaN;
     end
 end
 
 %%% Port5
 vel5 = zeros(1,length(port5_volt));
-stag5 = zeros(1,length(port5_volt));
+dynam5 = zeros(1,length(port5_volt));
 for i = 1:length(port5_volt)
     if port5_volt(i) > v0
-        stag5(i) = (port5_volt(i)-b)/m;
+        dynam5(i) = (port5_volt(i)-b)/m;
     else
-        stag5(i) = NaN;
+        dynam5(i) = NaN;
     end
 end
 
 %%% Port10
 vel10 = zeros(1,length(port10_volt));
-stag10 = zeros(1,length(port10_volt));
+dynam10 = zeros(1,length(port10_volt));
 for i = 1:length(port10_volt)
     if port10_volt(i) > v0
-        stag10(i) = (port10_volt(i)-b)/m;
+        dynam10(i) = (port10_volt(i)-b)/m;
     else
-        stag10(i) = NaN;
+        dynam10(i) = NaN;
     end
 end
 
-function [vel8,vel1,vel5,vel10] = Cross_Section_Velocities(p,stag8,stag1,stag5,stag10,static)
+function [vel8,vel1,vel5,vel10] = Cross_Section_Velocities(p,dynam8,dynam1,dynam5,dynam10,static)
 v0 = 1.241;
 %%%   Table 1 of Packet: Pressure and Velocity Profiles   %%%
 port8_pose = [66,71,76,81,86,91,96]; %Units in mm
@@ -116,7 +116,7 @@ static = zeros(1,10);
 vel8 = zeros(1,length(port8_volt));
 for i = 1:length(port8_volt)
     if port8_volt(i) > v0
-        vel8(i) = sqrt(2*(stag8(i)-static(8))/p);
+        vel8(i) = sqrt(2*(dynam8(i)-static(8))/p);
     else
         vel8(i) = NaN;
     end
@@ -126,7 +126,7 @@ end
 vel1 = zeros(1,length(port1_volt));
 for i = 1:length(port1_volt)
     if port1_volt(i) > v0
-        vel1(i) = sqrt(2*(stag1(i)-static(1))/p);
+        vel1(i) = sqrt(2*(dynam1(i)-static(1))/p);
     else
         vel1(i) = NaN;
     end
@@ -136,7 +136,7 @@ end
 vel5 = zeros(1,length(port5_volt));
 for i = 1:length(port5_volt)
     if port5_volt(i) > v0
-        vel5(i) = sqrt(2*(stag5(i)-static(5))/p);
+        vel5(i) = sqrt(2*(dynam5(i)-static(5))/p);
     else
         vel5(i) = NaN;
     end
@@ -146,7 +146,7 @@ end
 vel10 = zeros(1,length(port10_volt));
 for i = 1:length(port10_volt)
     if port10_volt(i) > v0
-        vel10(i) = sqrt(2*(stag10(i)-static(10))/p);
+        vel10(i) = sqrt(2*(dynam10(i)-static(10))/p);
     else
         vel10(i) = NaN;
     end
@@ -166,7 +166,7 @@ h8 = .005;
 h1 = .010;
 h5 = .010;
 h10 = .010;
-disp(vel10)
+%disp(vel10)
 
 sum_vels = [];
 for i =1:length(vel8)-1
