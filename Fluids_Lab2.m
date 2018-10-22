@@ -156,7 +156,7 @@ figure('Visible','on','Name','Cross Section Velocities')
 plot(vel8,port8_pose,'+r',vel1,port1_pose,'og',vel5,port5_pose,'*b',vel10,port10_pose,'xk')
 xlim([0,20])
 ylim([0,170])
-legend('Point 8','Point 1','Point 5','Point 10')
+legend('Port 8','Port 1','Port 5','Port 10')
 xlabel('Velocity (m/s)')
 ylabel('Vertical Position (mm)')
 title('Vertical Position vs Velocity at 4 Cross sections')
@@ -166,7 +166,7 @@ h8 = .005;
 h1 = .010;
 h5 = .010;
 h10 = .010;
-%disp(vel10)
+disp(vel1)
 
 sum_vels = [];
 for i =1:length(vel8)-1
@@ -192,7 +192,7 @@ for i =4:8
 end
 ave_vel10 = sum(sum_vels)/(2*5);
 
-%disp([ave_vel1,ave_vel5,ave_vel8,ave_vel10])
+disp([ave_vel1,ave_vel5,ave_vel8,ave_vel10])
 
 function table_calcs(static,ave_vel8,ave_vel1,ave_vel5,ave_vel10)
 areas = [33555,29643,25655,21897,17986,14151,10240,8323,13753,24830] .* 10^-6;
@@ -229,3 +229,5 @@ end
 
 function out = in_m(in)
 out = in.*.0254;
+
+
