@@ -45,6 +45,7 @@ static = zeros(1,length(volts_along_tunnel));
 for i = 1:length(volts_along_tunnel)
     static(i) = (volts_along_tunnel(i)-b)/m;
 end
+static = static .* -1;
 
 function [dynam8,dynam1,dynam5,dynam10] = dynamic_pressure(m,b)
 port8_volt = [1.452,1.451,1.451,1.452,1.453,1.454,1.460]; %Units in Volts
@@ -219,7 +220,7 @@ re = (1.204.*ave_vels.*hd)./(18.13*10^-6);
 flow = areas.*ave_vels;
 %disp(flow)
 
-stag = static + (.5 * 1.204 .* ave_vels.^2);
+stag = static + (.5 .* 1.204 .* ave_vels.^2);
 %disp(stag)
 
 for i = 1:10
